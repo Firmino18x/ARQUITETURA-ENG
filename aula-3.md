@@ -1,1 +1,70 @@
+# Destrinchando os estilos arquiteturais
+
+## 1. Estilo Monolítico
+
+### Conceito e definição
+
+O estilo monolítico é quando toda a lógica do sistema fica dentro de uma única aplicação. Ou seja, as partes do sistema são compiladas, testadas e colocadas em produção como um único bloco.
+
+Na prática, por exemplo, um sistema de uma empresa pode ter cadastro de funcionários, estoque, vendas e financeiro, mas tudo funciona dentro da mesma aplicação.
+
+### Casos de uso comuns
+
+O monolito é bastante usado em sistemas pequenos ou médios, principalmente quando o projeto está começando ou quando existe uma equipe pequena.
+
+Alguns exemplos são:
+
+* Sistemas de lojas e empresas, como um ERP com estoque, caixa e financeiro em uma única aplicação.
+* A Shopify, que utiliza um monolito modular em Ruby on Rails, mesmo sendo uma plataforma de grande escala.
+
+### Principais vantagens
+
+* É mais simples de desenvolver no começo.
+* É mais fácil de fazer o deploy, pois existe uma aplicação para colocar em produção.
+* Pode ser uma boa opção para equipes pequenas.
+* A comunicação entre as partes é mais simples, pois tudo está dentro da mesma aplicação.
+
+### Principais desvantagens
+
+* Se for necessário alterar apenas uma parte do sistema, normalmente é preciso fazer o deploy da aplicação inteira.
+* Pode ser difícil escalar somente uma parte específica do sistema.
+* Com o crescimento do projeto, o código pode ficar muito acoplado.
+* Os deploys podem ficar mais arriscados conforme o sistema cresce.
+
+## 2. Estilo Cliente-Servidor
+
+### Conceito e definição
+
+No estilo cliente-servidor, o sistema é dividido em dois papéis principais. O cliente faz uma solicitação e o servidor recebe essa solicitação, processa e devolve uma resposta.
+
+Um exemplo simples é quando o usuário acessa um site pelo navegador. O navegador faz uma solicitação para o servidor e o servidor retorna a página ou as informações solicitadas.
+
+### Casos de uso comuns
+
+Esse estilo é muito utilizado quando vários clientes precisam acessar um mesmo recurso ou serviço central.
+
+Alguns exemplos são:
+
+* Um navegador acessando um servidor web para buscar uma página ou informação.
+* O DNS, onde o computador faz uma consulta para um servidor DNS e recebe o endereço IP correspondente ao nome do site.
+
+### Principais vantagens
+
+* É um modelo simples de entender.
+* Vários clientes podem utilizar o mesmo servidor.
+* Os recursos podem ficar centralizados no servidor.
+* É um modelo muito conhecido e utilizado em sistemas atualmente.
+
+### Principais desvantagens
+
+* O servidor pode se tornar um gargalo quando recebe muitas solicitações.
+* Se o servidor ficar fora do ar, os clientes podem ficar sem acesso ao serviço.
+* É necessário cuidar da capacidade e manutenção do servidor.
+* Quanto maior o número de clientes, maior pode ser a necessidade de melhorar a infraestrutura do servidor.
+
+## Conclusão
+
+Os dois estilos possuem propostas diferentes. O monolito busca principalmente a simplicidade de manter o sistema em uma única aplicação, enquanto o cliente-servidor separa quem faz a solicitação de quem fornece o serviço.
+
+A escolha do estilo depende do tipo e do tamanho do sistema. Para sistemas menores, o monolito pode ser uma escolha mais simples. Já o cliente-servidor é interessante quando vários usuários ou aplicações precisam acessar um recurso central.
 
