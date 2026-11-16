@@ -1,0 +1,24 @@
+body { font-family: system-ui, sans-serif; margin: 0; color: #222; }
+header, main, footer { padding: 0 24px; }
+footer { margin-top: 32px; padding-bottom: 16px; color: #777; font-size: .85rem; }
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px;
+          padding: 10px 24px; background: #f2f2f2; border-bottom: 1px solid #ddd; }
+.topbar nav a { margin-right: 16px; }
+form div { margin-bottom: 8px; }
+label { display: inline-block; min-width: 90px; }
+table { border-collapse: collapse; margin-top: 8px; }
+th, td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
+th { background: #fafafa; }
+td form { margin: 0; }
+.hint { color: #666; font-size: .9rem; }
+.error { color: #b00020; font-weight: 600; }
+.status { padding: 2px 8px; border-radius: 10px; font-size: .85rem; }
+.status.DISPONIVEL { background: #e3f6e8; color: #1e6b34; }
+.status.INDISPONIVEL { background: #fff4d6; color: #7a5a00; }
+.status.DESCONTINUADO { background: #fde2e2; color: #8a1c1c; }
+button.danger { background: #b00020; color: #fff; border: 0; padding: 4px 10px; cursor: pointer; }
+.status.ABERTA { background: #e6efff; color: #1f4b99; }
+.status.FECHADA { background: #fff4d6; color: #7a5a00; }
+.status.FATURADA { background: #e3f6e8; color: #1e6b34; }
+.status.FALHA_FATURAMENTO { background: #fde2e2; color: #8a1c1c; }
+section { margin-bottom: 20px; }

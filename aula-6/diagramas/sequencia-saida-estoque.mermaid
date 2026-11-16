@@ -1,0 +1,44 @@
+sequenceDiagram
+    title Rotina de saída de estoque
+    actor U as Usuário
+    participant V as View (stock.html)
+    participant C as StockController
+    participant S as StockService
+    participant P as Product (entidade)
+    participant PR as ProductRepository
+    participant MR as StockMovementRepository
+
+    U->>V: Seleciona produto, tipo "Saída" e quantidade
+    V->>C: POST /stock (productId, SAIDA, quantity)
+    C->>S: register(productId, SAIDA, quantity)
+    S->>S: registerExit(productId, quantity)
+    S->>PR: findById(productId)
+    alt produto não encontrado
+        PR-->>S: Optional.empty()
+        S-->>C: BusinessException("Produto não encontrado")
+        C-->>V: tela de erro
+    else produto encontrado
+        PR-->>S: product
+        S->>P: removeStock(quantity)
+        alt produto DESCONTINUADO
+            P-->>S: BusinessException("descontinuado")
+            S-->>C: BusinessException (rollback)
+            C-->>V: tela de erro com a mensagem
+        else quantidade <= 0 ou maior que o saldo
+            P-->>S: BusinessException("estoque insuficiente")
+            S-->>C: BusinessException (rollback)
+            C-->>V: tela de erro com a mensagem
+        else movimentação válida
+            P->>P: quantity -= amount
+            opt saldo chegou a zero
+                P->>P: status = INDISPONÍVEL
+            end
+            P-->>S: ok
+            S->>PR: save(product)
+            S->>MR: save(StockMovement SAIDA, saldo após)
+            MR-->>S: movimento salvo
+            S-->>C: StockMovement
+            C-->>V: redirect:/stock
+            V-->>U: Saldo e histórico atualizados
+        end
+    end

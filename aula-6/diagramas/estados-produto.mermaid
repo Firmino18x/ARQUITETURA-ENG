@@ -1,0 +1,17 @@
+stateDiagram-v2
+    direction LR
+    [*] --> INDISPONIVEL : produto criado
+
+    INDISPONIVEL --> DISPONIVEL : entrada de estoque (saldo sai de zero)
+    DISPONIVEL --> DISPONIVEL : entrada ou saída com saldo > 0
+    DISPONIVEL --> INDISPONIVEL : saída de estoque (saldo zera)
+
+    INDISPONIVEL --> DESCONTINUADO : descontinuar [somente ADM]
+    DISPONIVEL --> DESCONTINUADO : descontinuar [somente ADM]
+
+    DESCONTINUADO --> [*]
+
+    note right of DESCONTINUADO
+        Estado final: não aceita entrada
+        nem saída de estoque
+    end note

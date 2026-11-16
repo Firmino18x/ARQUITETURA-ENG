@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <!-- Barra superior com navegação e troca de perfil -->
+    <div th:fragment="topbar(returnTo)" class="topbar">
+        <nav>
+            <a th:href="@{/}">Início</a>
+            <a th:href="@{/products}">Produtos</a>
+            <a th:href="@{/stock}">Estoque</a>
+        </nav>
+        <form th:action="@{/role}" method="post" class="role-form">
+            <input type="hidden" name="returnTo" th:value="${returnTo}">
+            <label for="role">Perfil:</label>
+            <select id="role" name="role">
+                <option th:each="r : ${roles}" th:value="${r}" th:text="${r.label}"
+                        th:selected="${r == currentRole}"></option>
+            </select>
+            <button type="submit">Trocar</button>
+        </form>
+    </div>
+</body>
+</html>

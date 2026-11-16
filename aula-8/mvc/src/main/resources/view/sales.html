@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Vendas</title>
+</head>
+<body>
+    <div th:replace="~{fragments :: topbar('/sales')}"></div>
+    <header>
+        <h1>Vendas</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Novo pedido</h2>
+            <form th:action="@{/sales}" th:object="${sale}" method="post">
+                <div>
+                    <label for="customerName">Cliente:</label>
+                    <input id="customerName" type="text" th:field="*{customerName}" required>
+                </div>
+                <div>
+                    <label for="customerEmail">E-mail:</label>
+                    <input id="customerEmail" type="email" th:field="*{customerEmail}" required>
+                </div>
+                <div>
+                    <label for="customerDocument">CPF/CNPJ:</label>
+                    <input id="customerDocument" type="text" th:field="*{customerDocument}" required>
+                </div>
+                <button type="submit">Abrir pedido</button>
+            </form>
+        </section>
+        <section>
+            <h2>Pedidos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Cliente</th>
+                        <th>Itens</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>ID da fatura</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="s : ${sales}">
+                        <td th:text="${s.id}"></td>
+                        <td th:text="${s.customerName}"></td>
+                        <td th:text="${#lists.size(s.items)}"></td>
+                        <td th:text="${s.total}"></td>
+                        <td><span th:class="'status ' + ${s.status}" th:text="${s.status.label}"></span></td>
+                        <td><code th:text="${s.invoiceId} ?: '-'"></code></td>
+                        <td><a th:href="@{/sales/{id}(id=${s.id})}">Abrir</a></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(sales)}">
+                        <td colspan="7">Nenhum pedido registrado.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        Projeto de compreensão do MVC
+    </footer>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Estoque</title>
+</head>
+<body>
+    <div th:replace="~{fragments :: topbar('/stock')}"></div>
+    <header>
+        <h1>Estoque</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Nova movimentação</h2>
+            <form th:action="@{/stock}" method="post">
+                <div>
+                    <label for="productId">Produto:</label>
+                    <select id="productId" name="productId" required>
+                        <option value="">Selecione...</option>
+                        <option th:each="p : ${products}" th:value="${p.id}"
+                                th:text="${p.name} + ' (saldo: ' + ${p.quantity} + ' | ' + ${p.status.label} + ')'"></option>
+                    </select>
+                </div>
+                <div>
+                    <label for="type">Tipo:</label>
+                    <select id="type" name="type" required>
+                        <option th:each="t : ${types}" th:value="${t}" th:text="${t.label}"></option>
+                    </select>
+                </div>
+                <div>
+                    <label for="quantity">Quantidade:</label>
+                    <input id="quantity" name="quantity" type="number" min="1" step="1" required>
+                </div>
+                <button type="submit">Registrar</button>
+            </form>
+            <p class="hint">Produtos descontinuados não podem ser movimentados, e não é possível dar saída maior que o saldo.</p>
+        </section>
+        <section>
+            <h2>Saldo por produto</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Produto</th>
+                        <th>Saldo</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="p : ${products}">
+                        <td th:text="${p.id}"></td>
+                        <td th:text="${p.name}"></td>
+                        <td th:text="${p.quantity}"></td>
+                        <td><span th:class="'status ' + ${p.status}" th:text="${p.status.label}"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h2>Movimentações</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data/hora</th>
+                        <th>Produto</th>
+                        <th>Tipo</th>
+                        <th>Quantidade</th>
+                        <th>Saldo após</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="m : ${movements}">
+                        <td th:text="${#temporals.format(m.createdAt, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                        <td th:text="${m.product.name}"></td>
+                        <td th:text="${m.type.label}"></td>
+                        <td th:text="${m.quantity}"></td>
+                        <td th:text="${m.balanceAfter}"></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(movements)}">
+                        <td colspan="5">Nenhuma movimentação registrada.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        Projeto de compreensão do MVC
+    </footer>
+</body>
+</html>
